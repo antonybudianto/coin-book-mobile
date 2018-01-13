@@ -10,6 +10,7 @@ class CoinView extends Component {
     this.state = {
       anim: new Animated.Value(0),
       count: 1,
+      redCount: 0,
       greenCount: 0,
       raising: false,
       same: true
@@ -42,6 +43,7 @@ class CoinView extends Component {
       this.setState({
         count: this.state.count + 1,
         greenCount: this.state.greenCount + (last > lastPrev ? 1 : 0),
+        redCount: this.state.redCount + (last < lastPrev ? 1 : 0),
         raising: last > lastPrev,
         same: last === lastPrev
       })
@@ -89,7 +91,7 @@ class CoinView extends Component {
             flex: 0.8
           }}>
             <Text style={styles.smallText}>G:{this.state.greenCount} -
-              R:{this.state.count - this.state.greenCount}</Text>
+              R:{this.state.redCount}</Text>
             <Text style={styles.smallText}>Vol-idr: {volIdr}</Text>
             <Text style={styles.smallText}>Vol-{volLabel}: {ticker['vol_' + volLabel]}</Text>
           </View>
