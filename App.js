@@ -26,7 +26,7 @@ export default class App extends React.Component {
   componentDidMount () {
     this.timer = setInterval(() => {
       this.fetchData();
-    }, 10000);
+    }, 5000);
     this.fetchData();
   }
 
@@ -38,9 +38,11 @@ export default class App extends React.Component {
     fetch(`https://vip.bitcoin.co.id/api/${tickerPath}/ticker`)
     .then(res => res.json())
     .then(json => {
-      this.setState({
-        [stateName]: json.ticker
-      })
+      if (json.ticker) {
+        this.setState({
+          [stateName]: json.ticker
+        })
+      }
     });
   }
 
