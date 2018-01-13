@@ -60,7 +60,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.whiteText}>VIP Bitcoin.co.id</Text>
+        <Text style={styles.whiteText}>Coin Book</Text>
         <ScrollView contentContainerStyle={{
           width: '100%',
           flexDirection: 'row',
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     padding: 10,
     backgroundColor: '#000',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'flex-start',
   },
   coinContainer: {
