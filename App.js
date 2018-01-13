@@ -1,77 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
-const convertNumToCurrency = (str) => parseFloat(str || 0).toLocaleString('id')
-
-class CoinView extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      count: 1,
-      raising: false
-    }
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (this.props.ticker !== nextProps.ticker) {
-      let last = parseFloat(nextProps.ticker.last || 0)
-      let lastPrev = parseFloat(this.props.ticker.last || 0)
-      this.setState({
-        count: this.state.count + 1,
-        raising: last > lastPrev
-      })
-    }
-  }
-
-  render() {
-    const { label, ticker, volLabel } = this.props
-    const last = convertNumToCurrency(ticker.last)
-    const buy = convertNumToCurrency(ticker.buy)
-    const sell = convertNumToCurrency(ticker.sell)
-    const high = convertNumToCurrency(ticker.high)
-    const low = convertNumToCurrency(ticker.low)
-    const volIdr = convertNumToCurrency(ticker.vol_idr)
-    return (
-      <View style={styles.coinContainer}>
-        <Text style={{
-          fontSize: 20,
-          color: this.state.raising ? 'lightgreen' : 'pink'
-        }}>{label}</Text>
-        <View style={{
-          flex: 1,
-          flexDirection: 'row',
-          marginTop: 5,
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          <View style={{
-            flex: 1
-          }}>
-            <Text style={{
-              fontWeight: 'bold'
-            }}>LAST: {last}</Text>
-            <Text>Buy: {buy}</Text>
-            <Text>Sell: {sell}</Text>
-            <Text>High: {high}</Text>
-            <Text>Low: {low}</Text>
-          </View>
-          <View style={{
-            flex: 1
-          }}>
-            <Text>Update: {this.state.count}</Text>
-            <Text>Vol-idr: {volIdr}</Text>
-            <Text>Vol-{volLabel}: {ticker['vol_' + volLabel]}</Text>
-          </View>
-        </View>
-      </View>
-    )
-  }
-}
-
+import CoinView from './src/components/CoinView'
 
 export default class App extends React.Component {
-
   constructor(props) {
     super(props)
 
@@ -79,7 +11,9 @@ export default class App extends React.Component {
       btcTicker: {},
       ethTicker: {},
       etcTicker: {},
-      ltcTicker: {}
+      ltcTicker: {},
+      bchTicker: {},
+      btgTicker: {}
     };
 
     this.timer = 0;
@@ -133,13 +67,36 @@ export default class App extends React.Component {
         ltcTicker: json.ticker
       })
     });
+
+    fetch('https://vip.bitcoin.co.id/api/bch_idr/ticker')
+    .then(res => res.json())
+    .then(json => {
+      console.log(json)
+      this.setState({
+        bchTicker: json.ticker
+      })
+    });
+
+    fetch('https://vip.bitcoin.co.id/api/btg_idr/ticker')
+    .then(res => res.json())
+    .then(json => {
+      console.log(json)
+      this.setState({
+        btgTicker: json.ticker
+      })
+    });
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.whiteText}>VIP Bitcoin.co.id</Text>
-        <ScrollView style={{
+        <ScrollView contentContainerStyle={{
+          width: '100%',
+          backgroundColor: 'darkgray',
+          flexDirection: 'row',
+          flexWrap: 'wrap'
+        }} style={{
           width: '100%',
           marginTop: 10
         }}>
@@ -147,6 +104,8 @@ export default class App extends React.Component {
           <CoinView volLabel='eth' label='ETH/IDR' ticker={this.state.ethTicker} />
           <CoinView volLabel='etc' label='ETC/IDR' ticker={this.state.etcTicker} />
           <CoinView volLabel='ltc' label='LTC/IDR' ticker={this.state.ltcTicker} />
+          <CoinView volLabel='bch' label='BCH/IDR' ticker={this.state.bchTicker} />
+          <CoinView volLabel='btg' label='BTG/IDR' ticker={this.state.btgTicker} />
         </ScrollView>
       </View>
     );
