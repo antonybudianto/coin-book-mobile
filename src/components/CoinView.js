@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Animated } from 'react-native';
 
 const convertNumToCurrency = (str) => parseFloat(str || 0).toLocaleString('id')
 
@@ -8,6 +8,7 @@ class CoinView extends Component {
     super(props);
 
     this.state = {
+      anim: new Animated.Value(0),
       count: 1,
       greenCount: 0,
       raising: false
@@ -18,6 +19,25 @@ class CoinView extends Component {
     if (this.props.ticker !== nextProps.ticker) {
       let last = parseFloat(nextProps.ticker.last || 0)
       let lastPrev = parseFloat(this.props.ticker.last || 0)
+
+      Animated.sequence([
+        Animated.timing(
+          this.state.anim,
+          {
+            toValue: 1,
+            duration: 500,
+          }
+        ),
+        Animated.delay(2000),
+        Animated.timing(
+          this.state.anim,
+          {
+            toValue: 0,
+            duration: 500,
+          }
+        )
+      ]).start();
+
       this.setState({
         count: this.state.count + 1,
         greenCount: this.state.greenCount + (last > lastPrev ? 1 : 0),
@@ -34,12 +54,16 @@ class CoinView extends Component {
     const high = convertNumToCurrency(ticker.high)
     const low = convertNumToCurrency(ticker.low)
     const volIdr = convertNumToCurrency(ticker.vol_idr)
+    const color = this.state.anim.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['white', this.state.raising ? 'lightgreen' : 'pink']
+    });
     return (
       <View style={styles.coinContainer}>
-        <Text style={{
+        <Animated.Text style={{
           fontSize: 20,
-          color: this.state.raising ? 'lightgreen' : 'pink'
-        }}>{label}</Text>
+          color: color
+        }}>{label}</Animated.Text>
         <View style={{
           flex: 0,
           flexDirection: 'row',
@@ -82,7 +106,8 @@ const styles = StyleSheet.create({
   coinContainer: {
     width: '50%',
     padding: 10,
-    marginBottom: 5,
+    marginTop: 2,
+    marginBottom: 2,
     backgroundColor: 'gray'
   }
 });

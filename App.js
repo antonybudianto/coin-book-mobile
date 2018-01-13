@@ -63,7 +63,6 @@ export default class App extends React.Component {
         <Text style={styles.whiteText}>VIP Bitcoin.co.id</Text>
         <ScrollView contentContainerStyle={{
           width: '100%',
-          backgroundColor: 'darkgray',
           flexDirection: 'row',
           flexWrap: 'wrap'
         }} style={{
