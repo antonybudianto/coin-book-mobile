@@ -1,5 +1,8 @@
 {
   "expo": {
-    "sdkVersion": "23.0.0"
+    "name": "Coin Book",
+    "description": "Simple Crypto Coin viewer",
+    "sdkVersion": "23.0.0",
+    "privacy": "public"
   }
 }
