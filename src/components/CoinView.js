@@ -11,7 +11,8 @@ class CoinView extends Component {
       anim: new Animated.Value(0),
       count: 1,
       greenCount: 0,
-      raising: false
+      raising: false,
+      same: true
     }
   }
 
@@ -25,7 +26,7 @@ class CoinView extends Component {
           this.state.anim,
           {
             toValue: 1,
-            duration: 500,
+            duration: 250,
           }
         ),
         Animated.delay(2000),
@@ -33,7 +34,7 @@ class CoinView extends Component {
           this.state.anim,
           {
             toValue: 0,
-            duration: 500,
+            duration: 250,
           }
         )
       ]).start();
@@ -41,7 +42,8 @@ class CoinView extends Component {
       this.setState({
         count: this.state.count + 1,
         greenCount: this.state.greenCount + (last > lastPrev ? 1 : 0),
-        raising: last > lastPrev
+        raising: last > lastPrev,
+        same: last === lastPrev
       })
     }
   }
@@ -56,7 +58,8 @@ class CoinView extends Component {
     const volIdr = convertNumToCurrency(ticker.vol_idr)
     const color = this.state.anim.interpolate({
       inputRange: [0, 1],
-      outputRange: ['white', this.state.raising ? 'lightgreen' : 'pink']
+      outputRange: ['white', this.state.same ? 'lightblue' :
+        (this.state.raising ? 'limegreen' : 'orange')]
     });
     return (
       <View style={styles.coinContainer}>
