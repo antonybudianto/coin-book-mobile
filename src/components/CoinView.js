@@ -61,7 +61,7 @@ class CoinView extends Component {
           <View style={{
             flex: 0.8
           }}>
-            <Text style={styles.smallText}>T:{this.state.count}-G:{this.state.greenCount}-
+            <Text style={styles.smallText}>G:{this.state.greenCount} -
               R:{this.state.count - this.state.greenCount}</Text>
             <Text style={styles.smallText}>Vol-idr: {volIdr}</Text>
             <Text style={styles.smallText}>Vol-{volLabel}: {ticker['vol_' + volLabel]}</Text>
