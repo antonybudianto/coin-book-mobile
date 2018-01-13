@@ -11,13 +11,16 @@ export default class App extends React.Component {
       btcTicker: {},
       ethTicker: {},
       etcTicker: {},
+      xrpTicker: {},
       ltcTicker: {},
       bchTicker: {},
-      btgTicker: {}
+      btgTicker: {},
+      ignisTicker: {}
     };
 
     this.timer = 0;
     this.fetchData = this.fetchData.bind(this);
+    this.fetchFromVip = this.fetchFromVip.bind(this);
   }
 
   componentDidMount () {
@@ -31,60 +34,25 @@ export default class App extends React.Component {
     clearInterval(this.timer);
   }
 
+  fetchFromVip (tickerPath, stateName) {
+    fetch(`https://vip.bitcoin.co.id/api/${tickerPath}/ticker`)
+    .then(res => res.json())
+    .then(json => {
+      this.setState({
+        [stateName]: json.ticker
+      })
+    });
+  }
+
   fetchData () {
-    fetch('https://vip.bitcoin.co.id/api/btc_idr/ticker')
-    .then(res => res.json())
-    .then(json => {
-      console.log(json)
-      this.setState({
-        btcTicker: json.ticker
-      })
-    });
-
-    fetch('https://vip.bitcoin.co.id/api/eth_idr/ticker')
-    .then(res => res.json())
-    .then(json => {
-      console.log(json)
-      this.setState({
-        ethTicker: json.ticker
-      })
-    });
-
-    fetch('https://vip.bitcoin.co.id/api/etc_idr/ticker')
-    .then(res => res.json())
-    .then(json => {
-      console.log(json)
-      this.setState({
-        etcTicker: json.ticker
-      })
-    });
-
-    fetch('https://vip.bitcoin.co.id/api/ltc_idr/ticker')
-    .then(res => res.json())
-    .then(json => {
-      console.log(json)
-      this.setState({
-        ltcTicker: json.ticker
-      })
-    });
-
-    fetch('https://vip.bitcoin.co.id/api/bch_idr/ticker')
-    .then(res => res.json())
-    .then(json => {
-      console.log(json)
-      this.setState({
-        bchTicker: json.ticker
-      })
-    });
-
-    fetch('https://vip.bitcoin.co.id/api/btg_idr/ticker')
-    .then(res => res.json())
-    .then(json => {
-      console.log(json)
-      this.setState({
-        btgTicker: json.ticker
-      })
-    });
+    this.fetchFromVip('btc_idr', 'btcTicker');
+    this.fetchFromVip('eth_idr', 'ethTicker');
+    this.fetchFromVip('etc_idr', 'etcTicker');
+    this.fetchFromVip('xrp_idr', 'xrpTicker');
+    this.fetchFromVip('ltc_idr', 'ltcTicker');
+    this.fetchFromVip('bch_idr', 'bchTicker');
+    this.fetchFromVip('btg_idr', 'btgTicker');
+    this.fetchFromVip('ignis_idr', 'ignisTicker');
   }
 
   render() {
@@ -103,9 +71,11 @@ export default class App extends React.Component {
           <CoinView volLabel='btc' label='BTC/IDR' ticker={this.state.btcTicker} />
           <CoinView volLabel='eth' label='ETH/IDR' ticker={this.state.ethTicker} />
           <CoinView volLabel='etc' label='ETC/IDR' ticker={this.state.etcTicker} />
+          <CoinView volLabel='xrp' label='XRP/IDR' ticker={this.state.xrpTicker} />
           <CoinView volLabel='ltc' label='LTC/IDR' ticker={this.state.ltcTicker} />
           <CoinView volLabel='bch' label='BCH/IDR' ticker={this.state.bchTicker} />
           <CoinView volLabel='btg' label='BTG/IDR' ticker={this.state.btgTicker} />
+          <CoinView volLabel='ignis' label='IGNIS/IDR' ticker={this.state.ignisTicker} />
         </ScrollView>
       </View>
     );
