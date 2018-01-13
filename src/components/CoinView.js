@@ -19,7 +19,7 @@ class CoinView extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.props.ticker !== nextProps.ticker) {
+    if (this.props.ticker !== nextProps.ticker && this.props.ticker !== null) {
       let last = parseFloat(nextProps.ticker.last || 0)
       let lastPrev = parseFloat(this.props.ticker.last || 0)
 
@@ -54,6 +54,15 @@ class CoinView extends Component {
 
   render() {
     const { label, ticker, volLabel } = this.props
+
+    if (ticker === null) {
+      return (
+        <View style={styles.coinContainer}>
+          <Text>Loading...</Text>
+        </View>
+      )
+    }
+
     const last = convertNumToCurrency(ticker.last)
     const buy = convertNumToCurrency(ticker.buy)
     const sell = convertNumToCurrency(ticker.sell)

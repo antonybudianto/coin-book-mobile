@@ -8,14 +8,14 @@ export default class App extends React.Component {
     super(props)
 
     this.state = {
-      btcTicker: {},
-      ethTicker: {},
-      etcTicker: {},
-      xrpTicker: {},
-      ltcTicker: {},
-      bchTicker: {},
-      btgTicker: {},
-      ignisTicker: {}
+      btcTicker: null,
+      ethTicker: null,
+      etcTicker: null,
+      xrpTicker: null,
+      ltcTicker: null,
+      bchTicker: null,
+      btgTicker: null,
+      ignisTicker: null
     };
 
     this.timer = 0;
