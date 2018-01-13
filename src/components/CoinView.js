@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Animated } from 'react-native';
+import { VictoryChart, VictoryLine, VictoryTheme } from "victory-native";
 
 const convertNumToCurrency = (str) => parseFloat(str || 0).toLocaleString('id')
+const HISTORY_COUNT = 50
 
 class CoinView extends Component {
   constructor(props) {
@@ -14,7 +16,8 @@ class CoinView extends Component {
       greenCount: 0,
       raising: false,
       same: true,
-      sum: 0
+      sum: 0,
+      history: []
     }
   }
 
@@ -41,13 +44,23 @@ class CoinView extends Component {
         )
       ]).start();
 
+      let his = [...this.state.history, {
+        x: this.props.label + Date.now(),
+        y: last
+      }]
+      if (his.length > HISTORY_COUNT) {
+        his = his.slice(his.length - HISTORY_COUNT)
+      }
+      console.log(his)
+
       this.setState({
         count: this.state.count + 1,
         greenCount: this.state.greenCount + (last > lastPrev ? 1 : 0),
         redCount: this.state.redCount + (last < lastPrev ? 1 : 0),
         raising: last > lastPrev,
         same: last === lastPrev,
-        sum: lastPrev === 0 ? 0 : this.state.sum + (last - lastPrev)
+        sum: lastPrev === 0 ? 0 : this.state.sum + (last - lastPrev),
+        history: his
       })
     }
   }
@@ -81,7 +94,7 @@ class CoinView extends Component {
           color: color
         }}>{label}</Animated.Text>
         <View style={{
-          flex: 0,
+          flex: 1,
           flexDirection: 'row',
           marginTop: 5,
           alignItems: 'flex-start',
@@ -108,6 +121,22 @@ class CoinView extends Component {
             <Text style={styles.smallText}>Vol-{volLabel}: {ticker['vol_' + volLabel]}</Text>
           </View>
         </View>
+        <View style={{
+          flex: 0,
+          marginTop: 5,
+          backgroundColor: 'white'
+        }}>
+            <VictoryLine
+              width={190}
+              height={60}
+              padding={10}
+              style={{
+                data: { stroke: "#c43a31", strokeWidth: 1 }
+              }}
+              data={this.state.history}
+            />
+        </View>
+
       </View>
     )
   }
@@ -122,6 +151,7 @@ const styles = StyleSheet.create({
   },
   coinContainer: {
     width: '50%',
+    flex: 0,
     padding: 10,
     marginTop: 2,
     marginBottom: 2,
