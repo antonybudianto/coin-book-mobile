@@ -13,7 +13,8 @@ class CoinView extends Component {
       redCount: 0,
       greenCount: 0,
       raising: false,
-      same: true
+      same: true,
+      sum: 0
     }
   }
 
@@ -45,7 +46,8 @@ class CoinView extends Component {
         greenCount: this.state.greenCount + (last > lastPrev ? 1 : 0),
         redCount: this.state.redCount + (last < lastPrev ? 1 : 0),
         raising: last > lastPrev,
-        same: last === lastPrev
+        same: last === lastPrev,
+        sum: lastPrev === 0 ? 0 : this.state.sum + (last - lastPrev)
       })
     }
   }
@@ -86,6 +88,7 @@ class CoinView extends Component {
             <Text style={styles.smallText}>Sell: {sell}</Text>
             <Text style={styles.smallText}>High: {high}</Text>
             <Text style={styles.smallText}>Low: {low}</Text>
+            <Text style={styles.smallText}>Sum: {this.state.sum.toLocaleString('id')}</Text>
           </View>
           <View style={{
             flex: 0.8
