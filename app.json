@@ -2,6 +2,7 @@
   "expo": {
     "name": "Coin Book",
     "description": "Simple Crypto Coin viewer",
+    "slug": "coinbook",
     "sdkVersion": "23.0.0",
     "privacy": "public",
     "icon": "./assets/coinbook.png",
