@@ -4,6 +4,7 @@
     "description": "Simple Crypto Coin viewer",
     "sdkVersion": "23.0.0",
     "privacy": "public",
-    "icon": "./assets/coinbook.png"
+    "icon": "./assets/coinbook.png",
+    "githubUrl": "https://github.com/antonybudianto/coin-book-mobile"
   }
 }
