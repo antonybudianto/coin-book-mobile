@@ -6,6 +6,9 @@
     "sdkVersion": "23.0.0",
     "privacy": "public",
     "icon": "./assets/coinbook.png",
-    "githubUrl": "https://github.com/antonybudianto/coin-book-mobile"
+    "githubUrl": "https://github.com/antonybudianto/coin-book-mobile",
+    "splash": {
+      "image": "./assets/coinbook.png"
+    }
   }
 }
