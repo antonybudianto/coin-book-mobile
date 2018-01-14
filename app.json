@@ -3,6 +3,7 @@
     "name": "Coin Book",
     "description": "Simple Crypto Coin viewer",
     "sdkVersion": "23.0.0",
-    "privacy": "public"
+    "privacy": "public",
+    "icon": "./assets/coinbook.png"
   }
 }
