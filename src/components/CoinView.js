@@ -19,6 +19,8 @@ class CoinView extends Component {
       sum: 0,
       history: []
     }
+
+    console.log(props)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -51,7 +53,6 @@ class CoinView extends Component {
       if (his.length > HISTORY_COUNT) {
         his = his.slice(his.length - HISTORY_COUNT)
       }
-      console.log(his)
 
       this.setState({
         count: this.state.count + 1,
@@ -122,19 +123,29 @@ class CoinView extends Component {
           </View>
         </View>
         <View style={{
-          flex: 0,
+          flex: 1,
           marginTop: 5,
           backgroundColor: 'white'
         }}>
-            <VictoryLine
-              width={190}
-              height={60}
-              padding={10}
-              style={{
-                data: { stroke: "#c43a31", strokeWidth: 1 }
-              }}
-              data={this.state.history}
-            />
+          {
+            this.state.history.length > 1 ? (
+              <VictoryLine
+                width={190}
+                height={60}
+                padding={10}
+                style={{
+                  data: { stroke: "#c43a31", strokeWidth: 1 }
+                }}
+                data={this.state.history}
+              />
+            ) : (
+              <Text style={{
+                fontSize: 10,
+                color: 'gray',
+                padding: 2
+              }}>Preparing chart...</Text>
+            )
+          }
         </View>
 
       </View>

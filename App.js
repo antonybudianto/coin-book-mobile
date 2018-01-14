@@ -26,7 +26,7 @@ export default class App extends React.Component {
   componentDidMount () {
     this.timer = setInterval(() => {
       this.fetchData();
-    }, 5000);
+    }, 10000);
     this.fetchData();
   }
 
