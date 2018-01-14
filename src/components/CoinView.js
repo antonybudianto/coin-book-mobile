@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Animated } from 'react-native';
+import { StyleSheet, Text, View, Animated, Dimensions } from 'react-native';
 import { VictoryChart, VictoryLine, VictoryTheme } from "victory-native";
 
+const WIDTH = Dimensions.get('window').width
 const convertNumToCurrency = (str) => parseFloat(str || 0).toLocaleString('id')
 const HISTORY_COUNT = 50
 
@@ -122,19 +123,19 @@ class CoinView extends Component {
             <Text style={styles.smallText}>Vol-{volLabel}: {ticker['vol_' + volLabel]}</Text>
           </View>
         </View>
-        <View style={{
+        <Animated.View style={{
           flex: 1,
           marginTop: 5,
-          backgroundColor: 'white'
+          backgroundColor: color
         }}>
           {
             this.state.history.length > 1 ? (
               <VictoryLine
-                width={190}
-                height={60}
+                width={(WIDTH/2) - 20}
+                height={50}
                 padding={10}
                 style={{
-                  data: { stroke: "#c43a31", strokeWidth: 1 }
+                  data: { stroke: 'brown', strokeWidth: 1 }
                 }}
                 data={this.state.history}
               />
@@ -146,7 +147,7 @@ class CoinView extends Component {
               }}>Preparing chart...</Text>
             )
           }
-        </View>
+        </Animated.View>
 
       </View>
     )
